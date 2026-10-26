@@ -1151,10 +1151,8 @@ jobs:
         needs: [ job-initialize, job-build-windows, job-build-linux, job-build-darwin ]
         env:
             PACKAGE_VERSION: ${{ needs.job-initialize.outputs.package_version }}
-        if: |
-            always()
-            && contains(needs.*.result, 'success')
-            && !contains(needs.*.result, 'failure')
+        # Fork: skip publish (needs maintainer secrets). Build jobs still upload artifacts.
+        if: false
         permissions:
             contents: write
             packages: write
